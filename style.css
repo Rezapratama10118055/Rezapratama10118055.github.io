@@ -1,0 +1,22 @@
+body {
+  background-color: #ffffff;
+  margin: 0px;
+  padding: 0px;
+}
+
+.jumbotron {
+  padding-top: 8rem;
+  background-color: rgb(253, 215, 0);
+}
+
+#about {
+  background-color: #273036;
+}
+
+#project {
+  background-color: rgb(253, 215, 0);
+}
+
+#contact {
+  background-color: #273036;
+}
