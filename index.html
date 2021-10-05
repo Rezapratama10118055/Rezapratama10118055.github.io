@@ -134,21 +134,30 @@
         </div>
         <div class="row text-white justify-content-center">
           <div class="col">
-            <form>
+            <div class="alert alert-warning alert-dismissible fade show my-alert d-none" role="alert">
+              <strong>Berhasil</strong> Mengirim Pesan.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="contactform">
               <div class="mb-3">
                 <label for="exampleInputnama" class="form-label">Nama</label>
-                <input type="nama" class="form-control" id="nama" aria-describedby="nama" />
+                <input type="nama" class="form-control" id="nama" aria-describedby="nama" name="nama" />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlemail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email" />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlpesan" class="form-label">Pesan</label>
-                <textarea class="form-control" id="exampleFormControlTextpesan" rows="3"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextpesan" rows="3" name="pesan"></textarea>
               </div>
 
-              <button type="submit" class="btn btn-warning mb-3">Submit</button>
+              <button type="submit" class="btn btn-warning kirim">Submit</button>
+
+              <button class="btn btn-primary loading d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
             </form>
           </div>
         </div>
@@ -175,5 +184,29 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbybBzso1CDxI0JMa8HKGWr2Wu3gSCJocvFZdDOg_W5zyLisURu109HUKp4XkG2FiEoA/exec';
+      const form = document.forms['contactform'];
+      const btnKirim = document.querySelector('.kirim');
+      const btnLoading = document.querySelector('.loading');
+      const myAlaret = document.querySelector('.my-alert');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        btnLoading.classList.toggle('d-none');
+        btnKirim.classList.toggle('d-none');
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+          .then((response) => {
+            btnLoading.classList.toggle('d-none');
+            btnKirim.classList.toggle('d-none');
+            myAlaret.classList.toggle('d-none');
+            form.reset();
+            console.log('Success!', response);
+          })
+          .catch((error) => console.error('Error!', error.message));
+      });
+    </script>
   </body>
 </html>
